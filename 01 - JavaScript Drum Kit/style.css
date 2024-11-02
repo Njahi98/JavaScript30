@@ -36,8 +36,6 @@ body,html {
   transform: scale(1.1);
   border-color: #ffc600;
   box-shadow: 0 0 1rem #ffc600;
-  animation: scaler 0.1s ease-in;
-
 }
 
 kbd {
@@ -50,15 +48,4 @@ kbd {
   text-transform: uppercase;
   letter-spacing: .1rem;
   color: #ffc600;
-}
-
-@keyframes scaler {
-  100%,0%{
-    scale: 1;
-  }
-  50%{
-    scale: 1.1;
-  }
- 
-
 }
