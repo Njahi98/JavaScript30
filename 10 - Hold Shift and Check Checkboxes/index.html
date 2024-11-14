@@ -96,21 +96,28 @@
     </div>
 
     <script>
-const checkboxes = Array.from(document.querySelectorAll('.item input[type="checkbox"]'));
-
-      const handleShift = (e) => {
-        if (e.keyCode === 16) {
-          console.log(checkboxes);
-          checkboxes.forEach((check) => {
-            check.addEventListener("change", (e) => {
-              console.log(e);
-            });
-  
+      const checkboxes = document.querySelectorAll(
+        '.inbox input[type="checkbox"]'
+      );
+      let lastCheck;
+      function handleClick(e) {
+        let inBetween = false;
+        if (e.shiftKey && this.checked) {
+          checkboxes.forEach((checkbox) => {
+            if (checkbox === this || checkbox === lastCheck) {
+              inBetween = !inBetween;
+            }
+            if (inBetween) {
+              checkbox.checked = true;
+            }
           });
         }
-      };
+        lastCheck = this;
+      }
 
-      window.addEventListener("keydown", handleShift);
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("click", handleClick);
+      });
     </script>
   </body>
 </html>
