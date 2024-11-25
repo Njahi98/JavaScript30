@@ -52,12 +52,18 @@
         <input type="text" name="item" placeholder="Item Name" required />
         <input type="submit" value="+ Add Item" />
       </form>
+      <div>
+        <button class="uncheck">Uncheck all</button>
+        <button class="delete">delete all</button>
+      </div>
     </div>
 
     <script>
       const addItems = document.querySelector(".add-items");
       const itemsList = document.querySelector(".plates");
       const items = JSON.parse(localStorage.getItem("items")) || [];
+      const uncheckItems = document.querySelector(".uncheck");
+      const deleteItems = document.querySelector(".delete");
 
       function addItem(e) {
         e.preventDefault();
@@ -78,7 +84,9 @@
           .map((plate, i) => {
             return `
       <li>
-        <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? "checked" : ""}/>
+        <input type="checkbox" data-index=${i} id="item${i}" ${
+              plate.done ? "checked" : ""
+            }/>
       <label for="item${i}"> ${plate.text} </label>  
       </li>
       `;
@@ -95,10 +103,25 @@
         populateList(items, itemsList);
       }
 
+      function uncheckAll() {
+        items.forEach((item) => (item.done = false));
+        localStorage.setItem("items", JSON.stringify(items));
+        populateList(items, itemsList);
+      }
+
+      function deleteAll() {
+        localStorage.removeItem("items");
+        items.length = 0;
+        populateList(items, itemsList);
+      }
+
       addItems.addEventListener("submit", addItem);
       populateList(items, itemsList);
 
       itemsList.addEventListener("click", toggleDone);
+
+      uncheckItems.addEventListener("click", uncheckAll);
+      deleteItems.addEventListener("click", deleteAll);
     </script>
   </body>
 </html>
